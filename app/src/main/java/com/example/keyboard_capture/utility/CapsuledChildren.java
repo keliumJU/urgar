@@ -1,5 +1,8 @@
 package com.example.keyboard_capture.utility;
 
+import android.util.Log;
+import android.widget.TextView;
+
 import com.example.keyboard_capture.api.retrofit.RestApiAdapter;
 import com.example.keyboard_capture.model.Hijo;
 import com.example.keyboard_capture.model.Padre;
@@ -11,12 +14,12 @@ import retrofit2.Response;
 public class CapsuledChildren {
 
     private Hijo hijo;
-
+    private final String TAG = "ChildrenLOG";
     public CapsuledChildren(Hijo hijo) {
         this.hijo = hijo;
     }
 
-    public String callPostNewChildren(){
+    public void callPostNewChildren(final TextView viewChildren){
         //Esto es horrible cambiarlo por una sola instancia -- objeto global y unico buscarlo en la arqutectura
         RestApiAdapter restApiAdapter = new RestApiAdapter();
 
@@ -29,18 +32,16 @@ public class CapsuledChildren {
                 .enqueue(new Callback<Hijo>() {
                     @Override
                     public void onResponse(Call<Hijo> call, Response<Hijo> response) {
-                        request[0] = response.body().toString();
+                        viewChildren.setText(response.body().toString());
                         //Log.i(TAG,"request: " + response.body().toString() + "==> u_u");
                     }
                     @Override
                     public void onFailure(Call<Hijo> call, Throwable t) {
-                        //Log.i(TAG,"request: Error :(");
-                        request[0] = "Fail call api";
+                        Log.i(TAG,"request: Error :(");
 
                     }
                 });
 
-        return request[0];
     }
 
 }

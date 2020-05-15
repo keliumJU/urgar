@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnCapture;
     private TextView padreView;
     private TextView hijoView;
-    private TextView captureView;
+    public static TextView captureView;
 
     //Llamada a los endpoints por medio de los siguientes objetos , mejorar esto con arquitectura ...
     private CapsuledCaptured capsuledCaptured;
@@ -98,12 +98,22 @@ Verificar captura de imei y numero de celular... descomentar para debug en desar
         //Nota: Esto se puede realizar con un template para crear un solo metodo de llamada ..., la respuesta siempre sera
         //la misma eje Template<hijo, padre, capture> para un solo metodo que devuelve un request. Revisar la arquitectura
 
+        btnPadre = findViewById(R.id.padrebtn);
+        btnHijo = findViewById(R.id.hijobtn);
+        btnCapture = findViewById(R.id.datacaptured);
+
+        padreView = findViewById(R.id.padreTxt);
+        hijoView = findViewById(R.id.hijoTxt);
+        captureView = findViewById(R.id.captureTxt);
+
         btnPadre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 padre = new Padre(imei, "padre: " + "ip33322111"+"."+"pp122345", "p122345", "padre@gmail.com");
                 capsuledFather = new CapsuledFather(padre);
-                padreView.setText(capsuledFather.callPostNewFather());
+                capsuledFather.callPostNewFather(padreView);
+                //Log.i(TAG, "2call Padre: " + .val);
+                //padreView.setText(CapsuledFather.val);
             }
         });
 
@@ -113,7 +123,7 @@ Verificar captura de imei y numero de celular... descomentar para debug en desar
                 String idPadreHashTest = get_SHA_512_SecurePassword("hash_padre", imei);
                 hijo = new Hijo(imei, "hijo: " + imei+"."+phone, phone, "hijo@gmail.com",idPadreHashTest);
                 capsuledChildren = new CapsuledChildren(hijo);
-                hijoView.setText(capsuledChildren.callPostNewChildren());
+                capsuledChildren.callPostNewChildren(hijoView);
             }
         }));
 
@@ -121,7 +131,8 @@ Verificar captura de imei y numero de celular... descomentar para debug en desar
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                captureView.setText(MyAccessibilityService.resolveMain);
+
+                //captureView.setText(MyAccessibilityService.resolveMain);
             }
         });
     }

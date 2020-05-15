@@ -22,11 +22,16 @@ public class Padre {
     @SerializedName("hash")
     private String hash;
 
+    public Padre() {
+    }
+
     public Padre(String ssid, String nick, String ntelefono, String correo){
         this.ssid = ssid;
         this.nick = nick;
         this.ntelefono = ntelefono;
         this.correo = correo;
+        this.msg = "lola";
+        this.hash = "hash lola";
     }
 
 

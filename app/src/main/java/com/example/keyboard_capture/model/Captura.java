@@ -112,6 +112,21 @@ public class Captura {
     @Override
     public String toString() {
         return "Captura{" +
+                "hash_owner='" + hash_owner + '\'' +
+                ", ssid='" + ssid + '\'' +
+                ", tipo_captura='" + tipo_captura + '\'' +
+                ", cadena_capturado='" + cadena_capturado + '\'' +
+                ", url_imagen='" + url_imagen + '\'' +
+                ", fecha_captura='" + fecha_captura + '\'' +
+                ", hora_captura='" + hora_captura + '\'' +
+                ", aplicacion='" + aplicacion + '\'' +
+                ", msg='" + msg + '\'' +
+                ", hash='" + hash + '\'' +
+                '}';
+    }
+
+    public String request() {
+        return "Captura{" +
                 "msg='" + msg + '\'' +
                 ", hash='" + hash + '\'' +
                 '}';

